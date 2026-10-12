@@ -33,7 +33,7 @@ for (let i = 1; i <= 20; i++) {
 
 let numbers = [1, 2, 3, 4, 5];
 
-let pokedex = [
+let evolucionesEevee = [
   {
     name: "sylveon",
     type: "hada",
@@ -78,7 +78,7 @@ let pokedex = [
   }
 ];
 
-console.log(pokedex);
+console.log(evolucionesEevee);
 
 let numbers2 = [1, 2, 3, 4];
 
@@ -217,3 +217,186 @@ catalogo_peliculas.forEach(function(pelicula) {
 });
 
 console.log(nombres_peliculas);
+// 
+
+
+ // Ejercicio 1: Autocuración con pociones de vida
+
+let vida = 40;
+const limiteInferior = 50;
+const limiteSuperior = 100;
+const curacion = 30;
+let pociones = 3;
+
+console.log("Vida inicial:", vida);
+console.log("Pociones disponibles:", pociones);
+
+let intervalo = setInterval(function() {
+
+  // Revisar si necesita usar una poción
+  if (vida < limiteInferior && pociones > 0) {
+
+    vida = vida + curacion;
+    pociones--;
+
+    // Evitar superar el límite de vida
+    if (vida > limiteSuperior) {
+      vida = limiteSuperior;
+    }
+
+    console.log("¡Usaste una poción!");
+    console.log("Vida recuperada:", vida);
+    console.log("Pociones restantes:", pociones);
+
+  } else {
+    console.log("Vida actual:", vida);
+  }
+
+  // Reducir la vida en 5 puntos
+  vida = vida - 5;
+
+  if (vida < 0) {
+    vida = 0;
+  }
+
+  console.log("Vida después del daño:", vida);
+
+  // Detener el programa cuando la vida llegue a 0
+  if (vida === 0) {
+    console.log("¡El jugador ha sido derrotado!");
+    clearInterval(intervalo);
+  }
+
+}, 2000);
+
+
+ // Ejercicio 2: Organizar los elementos de la bolsa
+
+const pokedex = [
+  {
+    nombre: "Pokeball",
+    cantidad: 5,
+    tipo: "Normal"
+  },
+  {
+    nombre: "Repel",
+    cantidad: 3,
+    tipo: "Normal"
+  },
+  {
+    nombre: "Quick Attack",
+    cantidad: 2,
+    tipo: "TM"
+  },
+  {
+    nombre: "Surf",
+    cantidad: 3,
+    tipo: "TM"
+  },
+  {
+    nombre: "Soda Pop",
+    cantidad: 10,
+    tipo: "Consumable"
+  }
+];
+
+// Crear los tres arreglos
+let elementosNormales = [];
+let elementosTM = [];
+let elementosConsumibles = [];
+
+// Separar los elementos por tipo
+function organizarBolsa() {
+
+  pokedex.forEach(function(elemento) {
+
+    if (elemento.tipo === "Normal") {
+      elementosNormales.push(elemento);
+
+    } else if (elemento.tipo === "TM") {
+      elementosTM.push(elemento);
+
+    } else if (elemento.tipo === "Consumable") {
+      elementosConsumibles.push(elemento);
+    }
+
+  });
+
+  // Ordenar por cantidad de mayor a menor
+  elementosNormales.sort(function(a, b) {
+    return b.cantidad - a.cantidad;
+  });
+
+  elementosTM.sort(function(a, b) {
+    return b.cantidad - a.cantidad;
+  });
+
+  elementosConsumibles.sort(function(a, b) {
+    return b.cantidad - a.cantidad;
+  });
+
+  // Mostrar resultados en consola
+  console.log("Elementos normales:", elementosNormales);
+  console.log("Máquinas técnicas (TM):", elementosTM);
+  console.log("Consumibles:", elementosConsumibles);
+}
+
+// Ejecutar la función
+organizarBolsa();
+
+
+ // Ejercicio 3: Ataque y cálculo de daño
+
+const pikachu = {
+  nombre: "Pikachu",
+  tipo: "Eléctrico",
+  ataque: "Impacto",
+  daño: 20,
+  vida: 50,
+  defensa: 10
+};
+
+const enemigo = {
+  nombre: "Onix",
+  tipo: "Roca",
+  vida: 50,
+  defensa: 10
+};
+
+// Función para calcular el daño
+function calcularDaño(atacante, defensor) {
+
+  let dañoReal = atacante.daño - defensor.defensa;
+
+  if (dañoReal < 0) {
+    dañoReal = 0;
+  }
+
+  return dañoReal;
+}
+
+// Función para ejecutar el ataque
+function atacar(atacante, defensor) {
+
+  console.log(atacante.nombre, "usa", atacante.ataque);
+
+  let daño = calcularDaño(atacante, defensor);
+
+  defensor.vida = defensor.vida - daño;
+
+  if (defensor.vida < 0) {
+    defensor.vida = 0;
+  }
+
+  console.log("Daño causado:", daño);
+  console.log("Vida restante de", defensor.nombre + ":", defensor.vida);
+
+  if (defensor.vida === 0) {
+    console.log(defensor.nombre, "ha sido derrotado.");
+  } else {
+    console.log(defensor.nombre, "sigue en combate.");
+  }
+}
+
+// Ejecutar el ataque
+atacar(pikachu, enemigo);
